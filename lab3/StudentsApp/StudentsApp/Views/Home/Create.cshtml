@@ -1,0 +1,31 @@
+﻿<div style="width: 100%;">
+    <div>
+        <h4>Students details:</h4>
+        <div style="margin-left: 20px;">
+            <input id="name" type="text" placeholder="Name" />
+            <input id="phone" style="margin-left: 15px;" type="text" placeholder="Phone" />
+        </div>
+    </div>
+    <hr />
+    <div style="font-size: 16px; margin-left: 20px;">
+        <input id="create" type="button" value="Create" />
+    </div>
+</div>
+
+<script>
+    $('#create').click(() => createStudent());
+
+    function createStudent() {
+        $.ajax({
+            type: "POST",
+            async: true,
+            data: {
+                name: $('#name').val(),
+                phone: $('#phone').val()
+            },
+            url: document.location.origin + '/api/students.json/',
+            success: () => window.location.href = document.location.origin,
+            error: (error) => console.log(JSON.stringify(error))
+        });
+    }
+</script>

@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>PWS - Lab 2</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>PWS - Lab 2</h2>
+    <br />
+
+    <div style="white-space:nowrap">
+        <label style="display: inline-block; width: 80px;">RESULT</label>
+        <input style="width: 150px;" id="txt-get" type="text" disabled>
+        <button style="margin-left: 20px; width: 90px;" id="btn-get">GET</button>
+    </div>
+    <br />
+
+    <div style="white-space:nowrap">
+        <label style="display: inline-block; width: 80px;">POST</label>
+        <input style="width: 150px;" id="txt-post" type="text">
+        <button style="margin-left: 20px; width: 90px;" id="btn-post">POST</button>
+    </div>
+    <br />
+
+    <div style="white-space:nowrap">
+        <label style="display: inline-block; width: 80px;">PUT</label>
+        <input style="width: 150px;" id="txt-put" type="text" />
+        <button style="margin-left: 20px; width: 90px;" id="btn-put">PUT</button>
+    </div>
+    <br />
+
+    <div style="white-space:nowrap">
+        <button style="margin-left: 266px; width: 90px;" id="btn-delete">DELETE</button>
+    </div>
+    <br />
+
+    <div style="white-space:nowrap">
+        <label style="display: inline-block; width: 80px;">INFO</label>
+        <input style="width: 150px;" id="txt-info" type="text" disabled />
+    </div>
+    <br />
+
+    <script type="application/javascript">
+        const serverUrl = "http://localhost:30002/api/result";
+
+        $.ajaxSetup({
+            xhrFields: {
+                withCredentials: true
+            }
+        });
+
+        $("#btn-get").click(function(){
+            $.ajax({
+                url: serverUrl,
+                method: "get",
+                success: function(response) {
+                    $("#txt-get").val(response.result);
+                    $("#txt-info").val("GET - success");
+                },
+            });
+        });
+
+        $("#btn-post").click(function(){
+            $.ajax({
+                url: serverUrl + "?result=" + $("#txt-post").val(),
+                method: "post",
+                success: function(response) {
+                    if (!$.trim(response)) {
+                        $("#txt-info").val("POST - success");
+                    } else {
+                        $("#txt-info").val("POST - invalid result param");
+                    }
+                    $("#txt-post").val("");
+                }, error: function() {
+                    $("#txt-info").val("POST - invalid param");
+                    $("#txt-post").val("");
+                }
+            });
+        });
+
+        $("#btn-put").click(function(){
+            $.ajax({
+                url: serverUrl + "?add=" + $("#txt-put").val(),
+                method: "put",
+                success: function(response) {
+                    if (!$.trim(response)) {
+                        $("#txt-info").val("PUT - success");
+                    } else {
+                        $("#txt-info").val("PUT - invalid add param");
+                    }
+                    $("#txt-put").val("");
+                }, error: function() {
+                    $("#txt-info").val("PUT - invalid param");
+                    $("#txt-put").val("");
+                }
+            });
+        });
+
+        $("#btn-delete").click(function(){
+            $.ajax({
+                url: serverUrl,
+                method: "delete",
+                success: function(response) {
+                    $("#txt-info").val("DELETE - success");
+                },
+            });
+        });
+    </script>
+</body>
+</html>

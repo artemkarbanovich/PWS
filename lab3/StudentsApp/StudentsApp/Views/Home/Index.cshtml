@@ -1,0 +1,242 @@
+﻿<div style="width: 100%;">
+    <div style="width: 58.5%; display: inline-block;">
+        <div>
+            <h4>Search params:</h4>
+            <div style="font-size: 16px; margin-left: 20px;">
+                <input id="like" type="text" placeholder="Search by name" />
+                <input id="global_like" style="margin-left: 10px;" type="text" placeholder="Global search" />
+            </div>
+        </div>
+        <div>
+            <h4>ID params:</h4>
+            <div style="font-size: 16px; margin-left: 20px;">
+                <input id="min_id" type="number" placeholder="Minimum ID" />
+                <input id="max_id" style="margin-left: 10px;" type="number" placeholder="Maximum ID" />
+            </div>
+        </div>
+        <div>
+            <h4>Pagination:</h4>
+            <div style="font-size: 16px; margin-left: 20px;">
+                <input id="limit" type="number" placeholder="Page size" />
+                <input id="offset" style="margin-left: 10px;" type="number" placeholder="Page number" />
+            </div>
+        </div>
+    </div>
+    <div style="width: 40.5%; display: inline-block;">
+        <div>
+            <h4>Sort by:</h4>
+            <div style="font-size: 16px; margin-left: 20px;">
+                <input id="sort_id" type="radio" name="sort" value="id" checked /> Id
+                <input id="sort_name" style="margin-left: 10px;" type="radio" name="sort" value="name" /> Name
+                <input id="sort_phone" style="margin-left: 10px;" type="radio" name="sort" value="phone" /> Phone
+            </div>
+        </div>
+        <div>
+            <h4>Display Columns:</h4>
+            <div style="font-size: 16px; margin-left: 20px;">
+                <input id="column_id" type="checkbox" checked /> ID
+                <input id="column_name" style="margin-left: 10px;" type="checkbox" checked /> Name
+                <input id="column_phone" style="margin-left: 10px;" type="checkbox" checked /> Phone
+            </div>
+        </div>
+        <div>
+            <h4>Response format:</h4>
+            <div style="font-size: 16px; margin-left: 20px;">
+                <input id="json" type="radio" name="format" checked value="json" /> JSON
+                <input id="xml" style="margin-left: 10px;" type="radio" name="format" value="xml" /> XML
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div style="font-size: 16px; margin-left: 20px;">
+        <input id="search" type="button" value="Search" />
+        <input id="reset" style="margin-left: 10px;" type="button" value="Reset" />
+        <input id="create" style="margin-left: 10px;" type="button" value="Create" />
+    </div>
+    <hr />
+</div>
+<div style="width: 100%">
+    <div id="students_table_container" style="width: 100%;">
+        <table id="students_table" style="width: 100%; border-collapse: collapse; margin: 10px;"></table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    let api_url = (format) => `${document.location.origin}/api/students.${format}/`;
+
+    $('#search').click(() => getStudents());
+    $('#reset').click(() => resetControls());
+    $('#create').click(() => window.location.href = `${document.location.origin}/home/create`);
+
+    function getStudents() {
+        let columns = '';
+
+        if ($('#column_id:checked').val())
+            columns += 'ID,';
+        if ($('#column_name:checked').val())
+            columns += 'NAME,';
+        if ($('#column_phone:checked').val())
+            columns += 'PHONE';
+        if (columns === '') {
+            alert('Choose at least 1 column');
+            return;
+        }
+
+        let query_dictionary = {
+            like: $('#like').val(),
+            globallike: $('#global_like').val(),
+            minid: $('#min_id').val(),
+            maxid: $('#max_id').val(),
+            limit: $('#limit').val(),
+            offset: ($('#offset').val() - 1) * $('#limit').val(),
+            sort: $('input[name="sort"]:checked').val(),
+            columns: columns
+        };
+
+        let query_string = Object.entries(query_dictionary).map(([key, value]) => `${key}=${value}`).join('&');
+        let request_url = decodeURI(api_url($('input[name="format"]:checked').val()) + '?' + query_string);
+
+        $.ajax({
+            type: 'GET',
+            async: true,
+            url: request_url,
+            success: (response) => {
+                if (response instanceof XMLDocument) {
+                    displayStudentsXmlResponse(response);
+                } else {
+                    displayStudentsJsonResponse(response.Result);
+                }
+            },
+            error: (error) => console.log(JSON.stringify(error))
+        });
+    }
+
+    function displayStudentsJsonResponse(students) {
+        $('#students_table').html('');
+
+        $('#students_table').append('<tr>');
+        if (students[0]?.Result.Id) {
+            $('#students_table').append('<th>Id</th>');
+        }
+        if (students[0]?.Result.Name) {
+            $('#students_table').append('<th>Name</th>');
+        }
+        if (students[0]?.Result.Phone) {
+            $('#students_table').append('<th>Phone</th>');
+        }
+        $('#students_table').append('<th></th>');
+        $('#students_table').append('<th></th>');
+        $('#students_table').append('</tr>');
+
+        for (let i = 0; i < students.length; i++) {
+            let student = students[i].Result;
+            let links = students[i].Links;
+
+            $('#students_table').append('<tr>');
+            if (student?.Id) {
+                $('#students_table').append(`<td>${student.Id}</td>`);
+            }
+            if (student?.Name) {
+                $('#students_table').append(`<td>${student.Name}</td>`);
+            }
+            if (student?.Phone) {
+                $('#students_table').append(`<td>${student.Phone}</td>`);
+            }
+
+            $('#students_table').append(`<td><a href=${document.location.origin}/home/details?url=${links.filter(link => link.Rel === 'self')[0].Url}>Details</a></td>`);
+            $('#students_table').append(`<td><a onclick="deleteStudent('${links.filter(link => link.Rel === 'delete')[0].Url}')" style='color: red; cursor: pointer;'>Delete</a></td>`);
+            $('#students_table').append('</tr>');
+        }
+    }
+
+    function deleteStudent(url) {
+        $.ajax({
+            type: 'DELETE',
+            async: true,
+            url: `${document.location.origin}/${url}`,
+            success: () => {
+                getStudents();
+            },
+            error: (error) => console.log(JSON.stringify(error))
+        });
+    }
+
+    function displayStudentsXmlResponse(students) {
+        let studentsObj = JSON.parse(JSON.parse(JSON.stringify(xml2json(students)).replace('undefined', ''))).SuccessOfListOfSuccessOfStudentResponse.Result.SuccessOfStudentResponse;
+
+        if (!Array.isArray(studentsObj)) {
+            studentsObj = new Array(studentsObj);
+        }
+
+        $('#students_table').html('');
+
+        $('#students_table').append('<tr>');
+        if (studentsObj[0].Result?.Id) {
+            $('#students_table').append('<th>Id</th>');
+        }
+        if (studentsObj[0].Result?.Name) {
+            $('#students_table').append('<th>Name</th>');
+        }
+        if (studentsObj[0].Result?.Phone) {
+            $('#students_table').append('<th>Phone</th>');
+        }
+        $('#students_table').append('<th></th>');
+        $('#students_table').append('<th></th>');
+        $('#students_table').append('</tr>');
+
+        for (let i = 0; i < studentsObj.length; i++) {
+            let student = studentsObj[i].Result;
+            let links = studentsObj[i].Links.LinkResponse;
+
+            $('#students_table').append('<tr>');
+            if (student?.Id) {
+                $('#students_table').append(`<td>${student.Id}</td>`);
+            }
+            if (student?.Name) {
+                $('#students_table').append(`<td>${student.Name}</td>`);
+            }
+            if (student?.Phone) {
+                $('#students_table').append(`<td>${student.Phone}</td>`);
+            }
+
+            $('#students_table').append(`<td><a href=${document.location.origin}/home/details?url=${links.filter(link => link.Rel === 'self')[0].Url}>Details</a></td>`);
+            $('#students_table').append(`<td><a onclick="deleteStudent('${links.filter(link => link.Rel === 'delete')[0].Url}')" style='color: red; cursor: pointer;'>Delete</a></td>`);
+            $('#students_table').append('</tr>');
+        }
+    }
+
+    function resetControls() {
+        $('#like').val('');
+        $('#global_like').val('');
+        $('#min_id').val('');
+        $('#max_id').val('');
+        $('#limit').val('');
+        $('#offset').val('');
+        $('#sort_id').prop('checked', true);
+        $('#sort_name').prop('checked', false);
+        $('#sort_phone').prop('checked', false);
+        $('#column_id').prop('checked', true);
+        $('#column_name').prop('checked', true);
+        $('#column_phone').prop('checked', true);
+        $('#json').prop('checked', true);
+        $('#xml').prop('checked', false);
+    }
+</script>
+
+<style>
+    table {
+        border: 1px solid black;
+    }
+
+    th {
+        border-bottom: 1px solid black;
+        padding: 5px;
+        padding-left: 10px;
+    }
+
+    td {
+        padding-top: 3px;
+        padding-bottom: 3px;
+        padding-left: 10px;
+    }
+</style>

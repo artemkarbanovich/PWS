@@ -1,0 +1,105 @@
+﻿@model dynamic
+
+<div style="width: 100%;">
+    <div>
+        <h4>Students details:</h4>
+        <div style="margin-left: 20px;">
+            <input id="id" type="number" placeholder="ID" disabled />
+            <input id="name" style="margin-left: 15px;" type="text" placeholder="Name" />
+            <input id="phone" style="margin-left: 15px;" type="text" placeholder="Phone" />
+        </div>
+    </div>
+    <hr />
+    <div style="font-size: 16px; margin-left: 20px;">
+        <input id="update" type="button" value="Update" />
+        <input id="delete" style="margin-left: 10px;" type="button" value="Delete" />
+    </div>
+</div>
+
+<script>
+    $(document).ready(() => {
+        $.ajax({
+            type: "GET",
+            async: true,
+            url: document.location.origin + '/@ViewBag.Url',
+            success: (response) => {
+                if (response instanceof XMLDocument) {
+                    displayStudentXmlResponse(response);
+                } else {
+                    displayStudentJsonResponse(response.Result);
+                }
+            },
+            error: (error) => displayError(error)
+        });
+    });
+
+    $('#update').click(() => updateStudent());
+    $('#delete').click(() => deleteStudent());
+
+    function updateStudent() {
+        $.ajax({
+            type: "PUT",
+            async: true,
+            data: {
+                name: $('#name').val(),
+                phone: $('#phone').val()
+            },
+            url: document.location.origin + '/@ViewBag.Url',
+            error: (error) => displayError(error)
+        });
+    }
+
+    function deleteStudent() {
+        $.ajax({
+            type: "DELETE",
+            async: true,
+            url: document.location.origin + '/@ViewBag.Url',
+            success: () => window.location.href = document.location.origin,
+            error: (error) => displayError(error)
+        });
+    }
+
+    function displayStudentJsonResponse(student) {
+        $('#id').val(student.Id);
+        $('#name').val(student.Name);
+        $('#phone').val(student.Phone);
+    }
+
+    function displayStudentXmlResponse(students) {
+        let studentObj = JSON.parse(JSON.parse(JSON.stringify(xml2json(students)).replace('undefined', ''))).SuccessOfStudentResponse;
+
+        $('#id').val(studentObj.Result.Id);
+        $('#name').val(studentObj.Result.Name);
+        $('#phone').val(studentObj.Result.Phone);
+    }
+
+    function displayError(error) {
+        if (error.responseText.includes('xml')) {
+            displayXmlError(error);
+        } else {
+            displayJsonError(error.responseJSON);
+        }
+    }
+
+    function displayJsonError(error) {
+        window.location.href = `${document.location.origin}/home/error?statusCode=${error.ErrorCode}&url=${error.Links[0].Url}`;
+    }
+
+    function displayXmlError(error) {
+        let url = error.responseText.substring(
+            error.responseText.indexOfEnd('<Url>'),
+            error.responseText.indexOfStart('</Url>')
+        );
+        window.location.href = `${document.location.origin}/home/error?statusCode=${error.status}&url=${url}`;
+    }
+
+    String.prototype.indexOfEnd = function (string) {
+        let i = this.indexOf(string);
+        return i == -1 ? -1 : i + string.length;
+    }
+
+    String.prototype.indexOfStart = function (string) {
+        let i = this.indexOf(string);
+        return i == -1 ? -1 : i;
+    }
+</script>
