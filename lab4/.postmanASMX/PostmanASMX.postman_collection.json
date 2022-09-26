@@ -1,0 +1,88 @@
+{
+	"info": {
+		"_postman_id": "7d06e826-dd09-498b-a147-b9ac5e3e9cf8",
+		"name": "PostmanASMX",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:57387/Simplex.asmx",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <SumMessageName xmlns=\"http://kak/\">\r\n            <a1 xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <S>string1</S>\r\n                <K>5</K>\r\n                <F>55.5</F>\r\n            </a1>\r\n            <a2 xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <S>string2</S>\r\n                <K>10</K>\r\n                <F>27.9</F>\r\n            </a2>\r\n        </SumMessageName>\r\n    </s:Body>\r\n</s:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:57387/Simplex.asmx",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "57387",
+					"path": [
+						"Simplex.asmx"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:57387/Simplex.asmx/AddMessageName",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "x=10&y=15",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:57387/Simplex.asmx/AddMessageName",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "57387",
+					"path": [
+						"Simplex.asmx",
+						"AddMessageName"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <input style="margin: 10px" required type="number" id="x" placeholder="x number" />
+    <input style="margin: 10px" required type="number" id="y" placeholder="y number" />
+    <div style="margin: 10px" id="output">Result: -</div>
+    <input style="margin: 10px" type="button" id="send" value="Send request" />
+
+    <script type="text/javascript">
+        $('#send').click(() => {
+            $.ajax({
+                url: "http://localhost:57387/Simplex.asmx/AddSMessageName",
+                type: "POST",
+                data: `{"x": ${$('#x').val()} ,"y": ${$('#y').val()}}`,
+                success: (response) => $('#output').text("Result: " + response.d),
+                contentType: "application/json; charset=utf-8"
+            })
+        })
+    </script>
+</body>
+</html>
