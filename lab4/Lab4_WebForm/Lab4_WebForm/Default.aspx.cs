@@ -1,4 +1,4 @@
-﻿using Lab4_WebForm.Proxy;
+﻿using Lab4_WebForm.Server;
 using System;
 using System.Web.UI;
 
@@ -13,7 +13,7 @@ namespace Lab4_WebForm
                 output.Text = string.Empty;
 
                 if (int.TryParse(x.Text, out var xProp) && int.TryParse(y.Text, out var yProp))
-                    output.Text = new Simplex().Add(xProp, yProp).ToString();
+                    output.Text = new SimplexImplementation().Add(xProp, yProp).ToString();
                 else
                     output.Text = "Invalid parameters";
             };
