@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="WCFSiplex" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="tcp_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Lab5_WCF.Models" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IWCFSiplex_Add_InputMessage">
+    <wsdl:part name="parameters" element="tns:Add" />
+  </wsdl:message>
+  <wsdl:message name="IWCFSiplex_Add_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWCFSiplex_Concat_InputMessage">
+    <wsdl:part name="parameters" element="tns:Concat" />
+  </wsdl:message>
+  <wsdl:message name="IWCFSiplex_Concat_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConcatResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWCFSiplex_Sum_InputMessage">
+    <wsdl:part name="parameters" element="tns:Sum" />
+  </wsdl:message>
+  <wsdl:message name="IWCFSiplex_Sum_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SumResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IWCFSiplex">
+    <wsdl:operation name="Add">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWCFSiplex/Add" message="tns:IWCFSiplex_Add_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWCFSiplex/AddResponse" message="tns:IWCFSiplex_Add_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Concat">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWCFSiplex/Concat" message="tns:IWCFSiplex_Concat_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWCFSiplex/ConcatResponse" message="tns:IWCFSiplex_Concat_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Sum">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWCFSiplex/Sum" message="tns:IWCFSiplex_Sum_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWCFSiplex/SumResponse" message="tns:IWCFSiplex_Sum_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="http" type="tns:IWCFSiplex">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Add">
+      <soap:operation soapAction="http://tempuri.org/IWCFSiplex/Add" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Concat">
+      <soap:operation soapAction="http://tempuri.org/IWCFSiplex/Concat" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Sum">
+      <soap:operation soapAction="http://tempuri.org/IWCFSiplex/Sum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="tcp" type="tns:IWCFSiplex">
+    <wsp:PolicyReference URI="#tcp_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Add">
+      <soap12:operation soapAction="http://tempuri.org/IWCFSiplex/Add" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Concat">
+      <soap12:operation soapAction="http://tempuri.org/IWCFSiplex/Concat" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Sum">
+      <soap12:operation soapAction="http://tempuri.org/IWCFSiplex/Sum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WCFSiplex">
+    <wsdl:port name="http" binding="tns:http">
+      <soap:address location="http://localhost:9090/WCFSiplex.svc/WCFSiplex" />
+    </wsdl:port>
+    <wsdl:port name="tcp" binding="tns:tcp">
+      <soap12:address location="net.tcp://localhost:9091/WCFSiplex.svc/TcpWCFSiplex" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:9091/WCFSiplex.svc/TcpWCFSiplex</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>DESKTOP-JF01800\Артём</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
