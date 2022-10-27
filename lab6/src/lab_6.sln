@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lab_6_odata", "lab_6_odata\lab_6_odata.csproj", "{034C9AA8-74CA-4D6A-B3F6-568CC4D4D09E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lab_6_client", "lab_6_client\lab_6_client.csproj", "{F3D48F01-948E-49F2-944D-02B99CB9D3AA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{034C9AA8-74CA-4D6A-B3F6-568CC4D4D09E} = {034C9AA8-74CA-4D6A-B3F6-568CC4D4D09E}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{034C9AA8-74CA-4D6A-B3F6-568CC4D4D09E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{034C9AA8-74CA-4D6A-B3F6-568CC4D4D09E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{034C9AA8-74CA-4D6A-B3F6-568CC4D4D09E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{034C9AA8-74CA-4D6A-B3F6-568CC4D4D09E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3D48F01-948E-49F2-944D-02B99CB9D3AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3D48F01-948E-49F2-944D-02B99CB9D3AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3D48F01-948E-49F2-944D-02B99CB9D3AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3D48F01-948E-49F2-944D-02B99CB9D3AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3A28CB61-D739-4299-81CC-7ADE0E54F822}
+	EndGlobalSection
+EndGlobal
