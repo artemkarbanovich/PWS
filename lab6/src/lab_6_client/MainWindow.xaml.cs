@@ -1,6 +1,7 @@
 ﻿using lab_6_client.StudentNotesModifyService;
 using System;
 using System.Data.Services.Client;
+using System.Linq;
 using System.Windows;
 using WsKakModel;
 
@@ -10,8 +11,13 @@ namespace lab_6_client
     {
         private readonly Uri _serviceUrl = new Uri("http://localhost:58061/StudentNotes.svc");
         private readonly StudentNotesModifyClient _modifyConnection = new StudentNotesModifyClient("http");
+        private readonly WsKakEntities _entities;
 
-        public MainWindow() => InitializeComponent();
+        public MainWindow()
+        {
+            _entities = new WsKakEntities(_serviceUrl);
+            InitializeComponent();
+        }
 
         public void OnGetStudentsClick(object sender, RoutedEventArgs e) => Exec(new WsKakEntities(_serviceUrl).Students);
 
@@ -57,7 +63,17 @@ namespace lab_6_client
         {
             if (!string.IsNullOrWhiteSpace(InsertValue.Text))
             {
-                _modifyConnection.Insert(InsertValue.Text);
+                // using Data Service to add student
+                {
+                    _entities.AddToStudents(new Student { Name = InsertValue.Text });
+                    _entities.SaveChanges();
+                }
+
+                // using custom WCF service to add student
+                {
+                    //_modifyConnection.Insert(InsertValue.Text);
+                }
+
                 InsertValue.Text = string.Empty;
             }
         }
@@ -66,7 +82,22 @@ namespace lab_6_client
         {
             if (int.TryParse(UpdateIdValue.Text, out var studentId) && !string.IsNullOrWhiteSpace(UpdateNameValue.Text))
             {
-                _modifyConnection.Update(studentId, UpdateNameValue.Text);
+                // using Data Service to update student
+                {
+                    var student = _entities.Students.Where(x => x.Id == studentId).First();
+                    if (student == null) return;
+
+                    student.Name = UpdateNameValue.Text;
+
+                    _entities.UpdateObject(student);
+                    _entities.SaveChanges();
+                }
+
+                // using another WCF service to update student
+                {
+                    //_modifyConnection.Update(studentId, UpdateNameValue.Text);
+                }
+
                 UpdateIdValue.Text = string.Empty;
                 UpdateNameValue.Text = string.Empty;
             }
