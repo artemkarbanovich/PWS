@@ -1,0 +1,227 @@
+{
+	"info": {
+		"_postman_id": "2dffcead-f401-4b5f-823b-5ae710feaddd",
+		"name": "lab8",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23702069"
+	},
+	"item": [
+		{
+			"name": "setM",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"jsonrpc\": \"2.0\",\r\n    \"method\": \"SetM\",\r\n    \"params\":\r\n    {\r\n        \"key\": \"key2\",\r\n        \"value\": \"200\"\r\n    },\r\n    \"id\": 1\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:62816/api/JRService/Single",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "62816",
+					"path": [
+						"api",
+						"JRService",
+						"Single"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getM",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"jsonrpc\": \"2.0\",\r\n    \"method\": \"GetM\",\r\n    \"params\":\r\n    {\r\n        \"key\": \"key2\"\r\n    },\r\n    \"id\": 1\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:62816/api/JRService/Single",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "62816",
+					"path": [
+						"api",
+						"JRService",
+						"Single"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addM",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"jsonrpc\": \"2.0\",\r\n    \"method\": \"AddM\",\r\n    \"params\":\r\n    {\r\n        \"key\": \"key1\",\r\n        \"value\": \"50\"\r\n    },\r\n    \"id\": 1\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:62816/api/JRService/Single",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "62816",
+					"path": [
+						"api",
+						"JRService",
+						"Single"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "subM",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"jsonrpc\": \"2.0\",\r\n    \"method\": \"SubM\",\r\n    \"params\":\r\n    {\r\n        \"key\": \"key1\",\r\n        \"value\": \"5\"\r\n    },\r\n    \"id\": 1\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:62816/api/JRService/Single",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "62816",
+					"path": [
+						"api",
+						"JRService",
+						"Single"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mulM",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"jsonrpc\": \"2.0\",\r\n    \"method\": \"MulM\",\r\n    \"params\":\r\n    {\r\n        \"key\": \"key1\",\r\n        \"value\": \"3\"\r\n    },\r\n    \"id\": 1\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:62816/api/JRService/Single",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "62816",
+					"path": [
+						"api",
+						"JRService",
+						"Single"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "divM",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"jsonrpc\": \"2.0\",\r\n    \"method\": \"DivM\",\r\n    \"params\":\r\n    {\r\n        \"key\": \"key1\",\r\n        \"value\": \"5\"\r\n    },\r\n    \"id\": 1\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:62816/api/JRService/Single",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "62816",
+					"path": [
+						"api",
+						"JRService",
+						"Single"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PackageRequest",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " [\r\n    {\r\n        \"jsonrpc\": \"2.0\",\r\n        \"method\": \"AddM\",\r\n        \"params\": \r\n        {\r\n            \"key\": \"key1\",\r\n            \"value\": \"90\"\r\n        },\r\n        \"id\": 1\r\n    },\r\n    {\r\n        \"jsonrpc\": \"2.0\",\r\n        \"method\": \"AddM\",\r\n        \"params\":\r\n        {\r\n            \"key\": \"key2\",\r\n            \"value\": \"40\"\r\n        },\r\n        \"id\": 1\r\n    }\r\n]"
+				},
+				"url": {
+					"raw": "http://localhost:62816/api/JRService/Multi",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "62816",
+					"path": [
+						"api",
+						"JRService",
+						"Multi"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

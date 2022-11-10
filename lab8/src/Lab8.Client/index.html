@@ -1,0 +1,356 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>lab8</title>
+    <script src="Scripts/jquery-3.5.1.js"></script>
+    <script>
+        const serv = "http://localhost:62816";
+        const addr = serv + "/api/JRService/Single";
+
+        function setM() {
+            var key = $("#set-key").val();
+            var value = $("#set-value").val();
+            var jsonrpc = {
+                "jsonrpc": "2.0",
+                "method": "SetM",
+                "id": "1",
+                "params":
+                {
+                    "key": key,
+                    "value": value
+                }
+            }
+
+            $.ajax({
+                url: addr,
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                traditional: true,
+                processData: false,
+                xhrFields: {
+                      withCredentials: true
+                },
+                data: JSON.stringify(jsonrpc),
+                success: result => document.getElementById("result").value = JSON.stringify(result),
+                error: error => document.getElementById("result").value = JSON.stringify(error)
+            })
+        }
+
+        function getM() {
+            var key = $("#get-key").val();
+            var jsonrpc = {
+                "jsonrpc": "2.0",
+                "method": "GetM",
+                "id": "1",
+                "params":
+                {
+                    "key": key
+                }
+            }
+
+            $.ajax({
+                url: addr,
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                traditional: true,
+                processData: false,
+                xhrFields: {
+                      withCredentials: true
+                },
+                data: JSON.stringify(jsonrpc),
+                success: result => document.getElementById("result").value = JSON.stringify(result),
+                error: error => document.getElementById("result").value = JSON.stringify(error)
+            })
+        }
+
+        function addM() {
+            var key = $("#add-key").val();
+            var value = $("#add-value").val();
+            var jsonrpc = {
+                "jsonrpc": "2.0",
+                "method": "AddM",
+                "id": "1",
+                "params":
+                {
+                    "key": key,
+                    "value": value
+                }
+            }
+
+            $.ajax({
+                url: addr,
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                traditional: true,
+                processData: false,
+                xhrFields: {
+                      withCredentials: true
+                },
+                data: JSON.stringify(jsonrpc),
+                success: result => document.getElementById("result").value = JSON.stringify(result),
+                error: error => document.getElementById("result").value = JSON.stringify(error)
+            });
+        }
+
+        function subM() {
+            var key = $("#sub-key").val();
+            var value = $("#sub-value").val();
+            var jsonrpc = {
+                "jsonrpc": "2.0",
+                "method": "SubM",
+                "id": "1",
+                "params":
+                {
+                    "key": key,
+                    "value": value
+                }
+            }
+
+            $.ajax({
+                url: addr,
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                traditional: true,
+                processData: false,
+                xhrFields: {
+                      withCredentials: true
+                },
+                data: JSON.stringify(jsonrpc),
+                success: result => document.getElementById("result").value = JSON.stringify(result),
+                error: error => document.getElementById("result").value = JSON.stringify(error)
+            });
+        }
+
+        function mulM() {
+            var key = $("#mul-key").val();
+            var value = $("#mul-value").val();
+            var jsonrpc = {
+                "jsonrpc": "2.0",
+                "method": "MulM",
+                "id": "1",
+                "params":
+                {
+                    "key": key,
+                    "value": value
+                }
+            }
+
+            $.ajax({
+                url: addr,
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                traditional: true,
+                processData: false,
+                xhrFields: {
+                      withCredentials: true
+                },
+                data: JSON.stringify(jsonrpc),
+                success: result => document.getElementById("result").value = JSON.stringify(result),
+                error: error => document.getElementById("result").value = JSON.stringify(error)
+            });
+        }
+
+        function divM() {
+            var key = $("#div-key").val();
+            var value = $("#div-value").val();
+            var jsonrpc = {
+                "jsonrpc": "2.0",
+                "method": "DivM",
+                "id": "1",
+                "params":
+                {
+                    "key": key,
+                    "value": value
+                }
+            }
+
+            $.ajax({
+                url: addr,
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                traditional: true,
+                processData: false,
+                xhrFields: {
+                      withCredentials: true
+                },
+                data: JSON.stringify(jsonrpc),
+                success: result => document.getElementById("result").value = JSON.stringify(result),
+                error: error => document.getElementById("result").value = JSON.stringify(error)
+            });
+        }
+
+        function multi() {
+            var addkey = $("#add-key").val();
+            var addvalue = $("#add-value").val();
+            var subkey = $("#sub-key").val();
+            var subvalue = $("#sub-value").val();
+            var mulkey = $("#mul-key").val();
+            var mulvalue = $("#mul-value").val();
+            var divkey = $("#div-key").val();
+            var divvalue = $("#div-value").val();
+
+            var jsonrpc = [
+                {
+                    "jsonrpc": "2.0",
+                    "method": "AddM",
+                    "id": "1",
+                    "params":
+                    {
+                        "key": addkey,
+                        "value": addvalue
+                    }
+                },
+                {
+                    "jsonrpc": "2.0",
+                    "method": "SubM",
+                    "id": "2",
+                    "params":
+                    {
+                        "key": subkey,
+                        "value": subvalue
+                    }
+                },
+                {
+                    "jsonrpc": "2.0",
+                    "method": "MulM",
+                    "id": "3",
+                    "params":
+                    {
+                        "key": mulkey,
+                        "value": mulvalue
+                    }
+                },
+                {
+                    "jsonrpc": "2.0",
+                    "method": "DivM",
+                    "id": "4",
+                    "params":
+                    {
+                        "key": divkey,
+                        "value": divvalue
+                    }
+                },
+            ];
+
+            $.ajax({
+                url: addr.replace("/Single", "/Multi"),
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                traditional: true,
+                processData: false,
+                xhrFields: {
+                      withCredentials: true
+                },
+                data: JSON.stringify(jsonrpc),
+                success: result => document.getElementById("result").value = JSON.stringify(result),
+                error: error => document.getElementById("result").value = JSON.stringify(error)
+            });
+        }
+
+        function errorExit() {
+            var jsonrpc = {
+                "jsonrpc": "2.0",
+                "method": "ErrorExit",
+                "id": "1",
+                "params":
+                {
+                    "key": null
+                }
+            }
+
+            $.ajax({
+                url: addr,
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                traditional: true,
+                processData: false,
+                xhrFields: {
+                      withCredentials: true
+                },
+                data: JSON.stringify(jsonrpc),
+                success: result => document.getElementById("result").value = JSON.stringify(result),
+                error: error => document.getElementById("result").value = JSON.stringify(error)
+            });
+        }
+    </script>
+</head>
+<body>
+    <form id="SetM" runat="server">
+        <div>
+            <div>
+                <input type="text" id="set-key" />
+                <input type="text" id="set-value" />
+                <input type="button" onclick="setM()" value="SetM" />
+            </div>
+        </div>
+    </form>
+    <form id="GetM" runat="server">
+        <div>
+            <div>
+                <input type="text" id="get-key" />
+                <input type="button" onclick="getM()" value="GetM" />
+            </div>
+        </div>
+    </form>
+    <form id="AddM" runat="server">
+        <div>
+            <div>
+                <input type="text" id="add-key" />
+                <input type="text" id="add-value" />
+                <input type="button" onclick="addM()" value="AddM" />
+            </div>
+        </div>
+    </form>
+    <form id="SubM" runat="server">
+        <div>
+            <div>
+                <input type="text" id="sub-key" />
+                <input type="text" id="sub-value" />
+                <input type="button" onclick="subM()" value="SubM" />
+            </div>
+        </div>
+    </form>
+    <form id="MulM" runat="server">
+        <div>
+            <div>
+                <input type="text" id="mul-key" />
+                <input type="text" id="mul-value" />
+                <input type="button" onclick="mulM()" value="MulM" />
+            </div>
+        </div>
+    </form>
+    <form id="DivM" runat="server">
+        <div>
+            <div>
+                <input type="text" id="div-key" />
+                <input type="text" id="div-value" />
+                <input type="button" onclick="divM()" value="DivM" />
+            </div>
+        </div>
+    </form>
+    <form id="Multi" runat="server">
+        <div>
+            <div>
+                <input type="button" onclick="multi()" value="Mutli" />
+            </div>
+        </div>
+    </form>
+    <form id="ErrorExit" runat="server">
+        <div>
+            <div>
+                <input type="button" onclick="errorExit()" value="ErrorExit" />
+            </div>
+        </div>
+    </form>
+    <div>
+        <textarea id="result" style="width: 550px; height: 300px;"></textarea>
+    </div>
+</body>
+</html>
