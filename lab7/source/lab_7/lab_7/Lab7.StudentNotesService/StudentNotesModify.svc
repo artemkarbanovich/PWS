@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="lab_6_odata.StudentNotesModify" CodeBehind="StudentNotesModify.svc.cs" %>
